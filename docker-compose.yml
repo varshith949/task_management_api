@@ -1,0 +1,30 @@
+services:
+
+  api:
+    build: .
+    container_name: task_management_api
+    ports:
+      - "3001:3000"
+
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongodb:27017/task_management_db
+      CORS_ORIGIN: "*"
+    depends_on:
+      - mongodb
+
+
+  mongodb:
+    image: mongo:8
+    container_name: task_management_mongodb
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongodb_data:/data/db
+
+
+volumes:
+  mongodb_data:
